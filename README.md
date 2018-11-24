@@ -1,6 +1,6 @@
 # Learning-Kotlin-With-Thortech
 
-Introduction
+Introduction - First Meet
 ------------
 
 Why Use Kotlin?
