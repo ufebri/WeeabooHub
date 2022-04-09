@@ -1,4 +1,4 @@
-package com.lagingoding.learningkotlinwiththortech
+package com.raytalktech.weeaboohub
 
 import org.junit.Test
 

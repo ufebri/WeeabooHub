@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Learning Kotlin With Thortech</string>
+    <string name="app_name">Weeboo Hub</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
