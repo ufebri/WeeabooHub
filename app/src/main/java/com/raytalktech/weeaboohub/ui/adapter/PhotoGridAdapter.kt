@@ -4,14 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
 import com.raytalktech.weeaboohub.databinding.GridViewItemBinding
-import com.raytalktech.weeaboohub.data.source.remote.response.DataResponseModified
 import com.raytalktech.weeaboohub.ui.viewholder.GridImagesViewHolder
 
-class PhotoGridAdapter :
+class PhotoGridAdapter(private val onClick: CallBackAdapter) :
     ListAdapter<DataMainEntity, GridImagesViewHolder>(DiffCallback) {
+
+    interface CallBackAdapter {
+        fun passingData(imgSrc: String)
+    }
 
     companion object DiffCallback : DiffUtil.ItemCallback<DataMainEntity>() {
         override fun areItemsTheSame(
@@ -40,6 +42,6 @@ class PhotoGridAdapter :
 
     override fun onBindViewHolder(holder: GridImagesViewHolder, position: Int) {
         val marsPhoto = getItem(position)
-        holder.bind(marsPhoto)
+        holder.bind(marsPhoto, onClick)
     }
 }

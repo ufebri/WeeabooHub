@@ -1,5 +1,7 @@
 package com.raytalktech.weeaboohub.config
 
+import com.raytalktech.weeaboohub.R
+
 object Constant {
 
     /**
@@ -49,4 +51,20 @@ object Constant {
         "dance",
         "cringe"
     )
+
+    /**
+     * Constant Value For Action BottomSheet sorter by [listActionIconAdapter]
+     */
+    val listActionAdapter: List<String> = listOf("Download", "Share", "Favorite", "Set Wallpaper")
+
+    /**
+     * Constant Value For Icon Action BottomSheet sorter by [listActionAdapter]
+     */
+    val listActionIconAdapter: List<Int> =
+        listOf(
+            R.drawable.ic_download,
+            R.drawable.ic_share,
+            R.drawable.ic_bookmark,
+            R.drawable.ic_set_wallpaper
+        )
 }

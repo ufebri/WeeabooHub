@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/homeFragment"
-        android:name="com.raytalktech.weeaboohub.ui.home.HomeFragment"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        tools:layout="@layout/fragment_home"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.fragment.app.FragmentContainerView xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/homeFragment"
+            android:name="com.raytalktech.weeaboohub.ui.home.HomeFragment"
+            android:layout_width="match_parent"
+            app:layout_anchor="@id/bottomSheet"
+            tools:layout="@layout/fragment_home"
+            android:layout_height="match_parent" />
+
+    <include layout="@layout/bottom_sheet" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

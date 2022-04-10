@@ -6,11 +6,12 @@ import com.bumptech.glide.Glide
 import com.raytalktech.weeaboohub.R
 import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
 import com.raytalktech.weeaboohub.databinding.GridViewItemBinding
+import com.raytalktech.weeaboohub.ui.adapter.PhotoGridAdapter
 
 class GridImagesViewHolder(private var binding: GridViewItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(data: DataMainEntity) {
+    fun bind(data: DataMainEntity, onClick: PhotoGridAdapter.CallBackAdapter) {
 
         Glide.with(binding.root)
             .load(data.imgSrc)
@@ -21,5 +22,7 @@ class GridImagesViewHolder(private var binding: GridViewItemBinding) :
                 )
             )
             .into(binding.marsImage)
+
+        binding.root.setOnClickListener { onClick.passingData(data.imgSrc) }
     }
 }
