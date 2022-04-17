@@ -12,7 +12,7 @@ class PhotoGridAdapter(private val onClick: CallBackAdapter) :
     ListAdapter<DataMainEntity, GridImagesViewHolder>(DiffCallback) {
 
     interface CallBackAdapter {
-        fun passingData(imgSrc: String)
+        fun passingData(id: String)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<DataMainEntity>() {

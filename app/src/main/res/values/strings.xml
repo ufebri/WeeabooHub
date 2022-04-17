@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Weeboo Hub</string>
+    <string name="app_name">Weeaboo Hub</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- General -->
+    <string name="intent_message">Check this out, i found it at Weeaboo Hub</string>
+    <string name="intent_title">Share To</string>
 </resources>

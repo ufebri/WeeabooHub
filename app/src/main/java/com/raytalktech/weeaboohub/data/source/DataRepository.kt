@@ -10,6 +10,7 @@ import com.raytalktech.weeaboohub.data.source.remote.response.DataResponse
 import com.raytalktech.weeaboohub.util.AppExecutors
 import com.raytalktech.weeaboohub.util.GeneralHelper
 import com.raytalktech.weeaboohub.util.vo.Resource
+import java.net.URL
 
 class DataRepository private constructor(
     private val localDataSource: LocalDataSource,
@@ -74,9 +75,13 @@ class DataRepository private constructor(
     override fun getDetailDataByID(id: String): LiveData<DataMainEntity> =
         localDataSource.getDetailDataWithID(id)
 
+
     override fun getBookmarkList(): LiveData<List<DataMainEntity>> =
         localDataSource.getBookmarkList()
 
     override fun addToBookmark(dataMainEntity: DataMainEntity, state: Boolean) =
         appExecutors.diskIO().execute { localDataSource.updateDetailData(dataMainEntity, state) }
+
+    override fun downloadImage(url: String, fileName: String) =
+        remoteDataSource.downloadFile(url, fileName)
 }

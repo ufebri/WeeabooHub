@@ -23,6 +23,6 @@ class GridImagesViewHolder(private var binding: GridViewItemBinding) :
             )
             .into(binding.marsImage)
 
-        binding.root.setOnClickListener { onClick.passingData(data.imgSrc) }
+        binding.root.setOnClickListener { onClick.passingData(data.id) }
     }
 }
