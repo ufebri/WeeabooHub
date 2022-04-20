@@ -42,7 +42,7 @@ class DetailViewModel(private val dataRepository: DataRepository) : ViewModel() 
         val fileName: String = GeneralHelper.generateFileName(getDataByID.value?.imgSrc)
 
         when (action.value) {
-            Constant.listActionAdapter[0] -> dataRepository.downloadImage(getURLImageString, fileName)
+            Constant.listActionAdapter[0] -> dataRepository.downloadImage(getURLImageString, fileName, mContext)
             Constant.listActionAdapter[1] -> GeneralHelper.shareIntent(
                 mContext, mContext.getString(
                     R.string.intent_message

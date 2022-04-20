@@ -1,5 +1,6 @@
 package com.raytalktech.weeaboohub.data.source
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
 import com.raytalktech.weeaboohub.util.vo.Resource
@@ -15,5 +16,5 @@ interface DataSource {
 
     fun getBookmarkList(): LiveData<List<DataMainEntity>>
 
-    fun downloadImage(url: String, fileName: String)
+    fun downloadImage(url: String, fileName: String, context: Context)
 }

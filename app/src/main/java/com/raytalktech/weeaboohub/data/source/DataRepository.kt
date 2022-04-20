@@ -1,5 +1,6 @@
 package com.raytalktech.weeaboohub.data.source
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.raytalktech.weeaboohub.data.NetworkBoundResource
 import com.raytalktech.weeaboohub.data.source.local.LocalDataSource
@@ -82,6 +83,6 @@ class DataRepository private constructor(
     override fun addToBookmark(dataMainEntity: DataMainEntity, state: Boolean) =
         appExecutors.diskIO().execute { localDataSource.updateDetailData(dataMainEntity, state) }
 
-    override fun downloadImage(url: String, fileName: String) =
-        remoteDataSource.downloadFile(url, fileName)
+    override fun downloadImage(url: String, fileName: String, context: Context) =
+        remoteDataSource.downloadFile(url, fileName, context)
 }
