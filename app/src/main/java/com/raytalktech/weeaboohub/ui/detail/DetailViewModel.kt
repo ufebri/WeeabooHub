@@ -36,7 +36,6 @@ class DetailViewModel(private val dataRepository: DataRepository) : ViewModel() 
 
     @SuppressLint("StaticFieldLeak")
     private lateinit var mContext: Context
-    private val action = MutableLiveData<String>()
     private val dataID = MutableLiveData<String>()
     private lateinit var getURLImage: URL
 
@@ -47,7 +46,7 @@ class DetailViewModel(private val dataRepository: DataRepository) : ViewModel() 
     var getDataByID: LiveData<DataMainEntity> =
         Transformations.switchMap(dataID) { mDataID -> dataRepository.getDetailDataByID(mDataID) }
 
-    private fun addToBookmark() {
+    fun addToBookmark() {
         val dataResource = getDataByID.value
         if (dataResource != null) {
             val newState = !dataResource.isFavorite

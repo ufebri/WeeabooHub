@@ -105,6 +105,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                 when (action) {
                     Constant.listActionAdapter[0] -> goDownload()
                     Constant.listActionAdapter[1] -> goShare()
+                    Constant.listActionAdapter[2] -> goSaveToBookmark()
                 }
             }
         }).apply {}
@@ -121,7 +122,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                     downloadImage.getResult { isSuccess: Boolean ->
                         if (isSuccess) {
                             dialog.cancel()
-                            showSnackBar("Success Saving")
+                            showSnackBar(getString(R.string.success_save_image))
                         } else {
                             dialog.cancel()
                             showSnackBar(getString(R.string.error_gesi02))
@@ -146,15 +147,18 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             getString(R.string.intent_title),
             urlImage
         )
-        shareIntent.getResult {
-            isSuccess: Boolean ->
+        shareIntent.getResult { isSuccess: Boolean ->
             if (isSuccess) {
                 dialogshare.cancel()
-            }
-            else {
+            } else {
                 dialogshare.cancel()
                 showSnackBar(getString(R.string.error_gesi01))
             }
         }
+    }
+
+    private fun goSaveToBookmark() {
+        viewModel.addToBookmark()
+        showSnackBar(getString(R.string.success_added_bookmark))
     }
 }

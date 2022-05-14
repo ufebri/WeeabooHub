@@ -16,4 +16,8 @@
     <!--  ERROR Message  -->
     <string name="error_gesi01">There\'s something wrong, try again later [GES01]</string>
     <string name="error_gesi02">There\'s something wrong, try again later [GES02]</string>
+
+    <!--  SUCCESS MESSAGE  -->
+    <string name="success_save_image">Success Saving Image</string>
+    <string name="success_added_bookmark">Success Saved to Bookmark</string>
 </resources>
