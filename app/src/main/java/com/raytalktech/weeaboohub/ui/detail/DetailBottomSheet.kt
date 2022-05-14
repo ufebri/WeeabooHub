@@ -1,6 +1,7 @@
 package com.raytalktech.weeaboohub.ui.detail
 
 import android.app.AlertDialog
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,10 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.raytalktech.weeaboohub.R
 import com.raytalktech.weeaboohub.config.Constant
@@ -30,7 +35,8 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
     private lateinit var format: String
     private lateinit var permissionManager: PermissionManager
     private lateinit var dialog: AlertDialog
-    private lateinit var dialogshare: AlertDialog
+    private lateinit var dialogLoading: AlertDialog
+    private lateinit var bitmap: Bitmap
 
     companion object {
         private const val ARG_TEXT = "fragmentTAG"
@@ -65,7 +71,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             permissionManager = PermissionManager.from(this)
 
             dialog = GeneralHelper.setProgressDialog(requireContext(), "Downloading...")
-            dialogshare = GeneralHelper.setProgressDialog(requireContext(), "Loading...")
+            dialogLoading = GeneralHelper.setProgressDialog(requireContext(), "Loading...")
 
             initDialog()
         }
@@ -82,8 +88,33 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
 
         binding?.apply {
             Glide.with(requireContext())
+                .asBitmap()
                 .load(urlImage)
                 .placeholder(R.drawable.loading_animation)
+                .listener(object : RequestListener<Bitmap> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Bitmap?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        resource?.let {
+                            bitmap = it
+                            ivItem.setImageBitmap(it)
+                        }
+                        return true
+                    }
+                })
                 .into(ivItem)
 
             rvAction.adapter = actionLinearAdapter
@@ -106,6 +137,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                     Constant.listActionAdapter[0] -> goDownload()
                     Constant.listActionAdapter[1] -> goShare()
                     Constant.listActionAdapter[2] -> goSaveToBookmark()
+                    Constant.listActionAdapter[3] -> goSetWallpaper()
                 }
             }
         }).apply {}
@@ -140,7 +172,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun goShare() {
-        dialogshare.show()
+        dialogLoading.show()
         val shareIntent = ShareIntent(requireContext())
         shareIntent.go(
             getString(R.string.intent_message),
@@ -149,9 +181,9 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
         )
         shareIntent.getResult { isSuccess: Boolean ->
             if (isSuccess) {
-                dialogshare.cancel()
+                dialogLoading.cancel()
             } else {
-                dialogshare.cancel()
+                dialogLoading.cancel()
                 showSnackBar(getString(R.string.error_gesi01))
             }
         }
@@ -160,5 +192,20 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
     private fun goSaveToBookmark() {
         viewModel.addToBookmark()
         showSnackBar(getString(R.string.success_added_bookmark))
+    }
+
+    private fun goSetWallpaper() {
+        dialogLoading.show()
+        val setWallpaper = SetWallpaper(requireContext())
+        setWallpaper.go(bitmap)
+        setWallpaper.getResult { isSuccess: Boolean ->
+            if (isSuccess) {
+                dialogLoading.cancel()
+                showSnackBar(getString(R.string.success_set_wallpaper))
+            } else {
+                dialogLoading.cancel()
+                showSnackBar(getString(R.string.error_gesw01))
+            }
+        }
     }
 }

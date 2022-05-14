@@ -53,14 +53,4 @@ class DetailViewModel(private val dataRepository: DataRepository) : ViewModel() 
             dataRepository.addToBookmark(dataResource, newState)
         }
     }
-
-    private fun setWallpaper() {
-        val wallpaperManager: WallpaperManager = WallpaperManager.getInstance(mContext)
-        try {
-            val ins: InputStream = getURLImage.openStream()
-            wallpaperManager.setStream(ins)
-        } catch (e: Exception) {
-            GeneralHelper.showToastMessage(mContext, e.localizedMessage ?: "")
-        }
-    }
 }
