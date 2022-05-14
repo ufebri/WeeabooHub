@@ -67,6 +67,4 @@ object Constant {
             R.drawable.ic_bookmark,
             R.drawable.ic_set_wallpaper
         )
-
-    const val PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: Int = 1
 }

@@ -1,6 +1,5 @@
 package com.raytalktech.weeaboohub.data.source
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import com.raytalktech.weeaboohub.data.NetworkBoundResource
 import com.raytalktech.weeaboohub.data.source.local.LocalDataSource
@@ -11,7 +10,6 @@ import com.raytalktech.weeaboohub.data.source.remote.response.DataResponse
 import com.raytalktech.weeaboohub.util.AppExecutors
 import com.raytalktech.weeaboohub.util.GeneralHelper
 import com.raytalktech.weeaboohub.util.vo.Resource
-import java.net.URL
 
 class DataRepository private constructor(
     private val localDataSource: LocalDataSource,
@@ -62,7 +60,8 @@ class DataRepository private constructor(
                             type = type,
                             category = category,
                             dateModified = GeneralHelper.getDateNow(),
-                            imgSrc = data.files[response]
+                            imgSrc = data.files[response],
+                            format = GeneralHelper.setFileFormat(data.files[response])
                         )
                         listData.add(mData)
                     }
@@ -83,6 +82,4 @@ class DataRepository private constructor(
     override fun addToBookmark(dataMainEntity: DataMainEntity, state: Boolean) =
         appExecutors.diskIO().execute { localDataSource.updateDetailData(dataMainEntity, state) }
 
-    override fun downloadImage(url: String, fileName: String, context: Context) =
-        remoteDataSource.downloadFile(url, fileName, context)
 }

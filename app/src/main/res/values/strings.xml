@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Weeaboo Hub</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- General -->
     <string name="intent_message">Check this out, i found it at Weeaboo Hub</string>
     <string name="intent_title">Share To</string>
+
+    <!--  Permission  -->
+    <string name="dialog_permission_title">Permission required</string>
+    <string name="dialog_permission_default_message">Permission required to handle this operations</string>
+    <string name="dialog_permission_button_positive">OK</string>
+    <string name="dialog_permission_save_image">Permission required to save photos from the Web.</string>
+    <string name="dialog_permission_denied_permission">Permission required to handle this operations, activated the permission in the Settings Menu</string>
 </resources>

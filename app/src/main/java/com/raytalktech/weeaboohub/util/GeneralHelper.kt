@@ -1,6 +1,5 @@
 package com.raytalktech.weeaboohub.util
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -9,18 +8,41 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.raytalktech.weeaboohub.config.Constant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.*
-import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
+import android.widget.LinearLayout
+
+import android.view.WindowManager
+
+import android.widget.TextView
+
+import android.view.Gravity
+
+import android.view.ViewGroup
+import android.view.Window
+
+import android.widget.ProgressBar
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import com.google.android.material.snackbar.Snackbar
+import com.raytalktech.weeaboohub.R
+
 
 object GeneralHelper {
 
@@ -36,8 +58,17 @@ object GeneralHelper {
 
     fun generateFileName(url: String?): String {
         return when ((url != null || url != "")) {
-            true -> url?.replaceAfter(Constant.BASE_IMAGE_URL, "").toString()
+            true -> url?.replace(Constant.BASE_IMAGE_URL, "").toString()
             false -> ""
+        }
+    }
+
+    fun setFileFormat(url: String): String {
+        return when {
+            url.contains(".jpg") -> "jpg"
+            url.contains(".gif") -> "gif"
+            url.contains(".png") -> "png"
+            else -> "png"
         }
     }
 
@@ -77,68 +108,82 @@ object GeneralHelper {
         }
     }
 
-    fun isPermissionGranted(
-        context: Context,
-        permission: String
-    ): Boolean {
-        val isGranted = true
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            val permissionGranted = PackageManager.PERMISSION_GRANTED
-
-            if (ContextCompat.checkSelfPermission(context, permission) != permissionGranted) {
-                // Permission is not granted
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        context as Activity,
-                        permission
-                    )
-                ) {
-                    // Show an explanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
-                    AlertDialog.Builder(context)
-                        .setTitle("Permission required")
-                        .setMessage("Permission required to save photos from the Web.")
-                        .setPositiveButton("Allow") { dialog, id ->
-                            ActivityCompat.requestPermissions(
-                                context,
-                                arrayOf(permission),
-                                1
-                            )
-                            context.finish()
-                        }
-                        .setNegativeButton("Deny") { dialog, id -> dialog.cancel() }
-                        .show()
-                } else {
-                    // No explanation needed, we can request the permission.
-                    ActivityCompat.requestPermissions(
-                        context,
-                        arrayOf(permission),
-                        1
-                    )
-                    // MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
-
-                }
+    fun showAlertDialog(context: Context, title: String, message: String, positiveButton: String) {
+        AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(positiveButton) { dialog, id ->
+                dialog.dismiss()
             }
-        }
-        return isGranted
+            .setNegativeButton("Deny") { dialog, id ->
+                dialog.cancel()
+            }
+            .show()
     }
 
-    fun mLoad(url: String): Bitmap? {
-        val url = URL(url)
-        val connection: HttpURLConnection?
-        try {
-            connection = url.openConnection() as HttpURLConnection
-            connection.connect()
-            val inputStream: InputStream = connection.inputStream
-            val bufferedInputStream = BufferedInputStream(inputStream)
-            return BitmapFactory.decodeStream(bufferedInputStream)
-        } catch (e: IOException) {
-            Log.d("mLoad", "mLoad: ${e.printStackTrace()} ")
+    fun setProgressDialog(context: Context, message: String): AlertDialog {
+        val llPadding = 30
+        val ll = LinearLayout(context)
+        ll.orientation = LinearLayout.HORIZONTAL
+        ll.setPadding(llPadding, llPadding, llPadding, llPadding)
+        ll.gravity = Gravity.CENTER
+        var llParam = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        llParam.gravity = Gravity.CENTER
+        ll.layoutParams = llParam
+
+        val progressBar = ProgressBar(context)
+        progressBar.isIndeterminate = true
+        progressBar.setPadding(0, 0, llPadding, 0)
+        progressBar.layoutParams = llParam
+
+        llParam = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        llParam.gravity = Gravity.CENTER
+        val tvText = TextView(context)
+        tvText.text = message
+        tvText.setTextColor(Color.parseColor("#000000"))
+        tvText.textSize = 20.toFloat()
+        tvText.layoutParams = llParam
+
+        ll.addView(progressBar)
+        ll.addView(tvText)
+
+        val builder = AlertDialog.Builder(context)
+        builder.setCancelable(true)
+        builder.setView(ll)
+
+        val dialog = builder.create()
+        val window = dialog.window
+        if (window != null) {
+            val layoutParams = WindowManager.LayoutParams()
+            layoutParams.copyFrom(dialog.window?.attributes)
+            layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT
+            layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
+            dialog.window?.attributes = layoutParams
         }
-        return null
+        return dialog
+    }
+
+    fun Activity.showSnackBar(msg: String) {
+        Snackbar.make(this.findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT)
+            .setAction("OK") {
+            }
+            .show()
+    }
+
+    fun Fragment.showSnackBar(msg: String) {
+        Snackbar.make(
+            this.requireView().rootView,
+            msg,
+            Snackbar.LENGTH_SHORT
+        )
+            .setAction("OK") {
+            }
+            .show()
     }
 }
