@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,9 +39,11 @@ import android.view.ViewGroup
 import android.view.Window
 
 import android.widget.ProgressBar
+import androidx.core.content.FileProvider
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
+import com.raytalktech.weeaboohub.BuildConfig
 import com.raytalktech.weeaboohub.R
 
 
@@ -79,34 +82,6 @@ object GeneralHelper {
 
     fun showToastMessage(mContext: Context, message: String) =
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
-
-    @SuppressLint("SetWorldReadable")
-    fun shareIntent(mContext: Context, message: String, title: String, url: String) {
-        val img: Bitmap
-
-        try {
-            val imgURL = URL(url)
-            img = BitmapFactory.decodeStream(imgURL.openConnection().getInputStream())
-
-            val file = File(mContext.externalCacheDir, generateFileName(url))
-            val fOut = FileOutputStream(file)
-            img.compress(Bitmap.CompressFormat.PNG, 100, fOut)
-            fOut.flush()
-            fOut.close()
-            file.setReadable(true, false)
-
-
-            val intent = Intent()
-            intent.action = Intent.ACTION_SEND
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra(Intent.EXTRA_TEXT, message)
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
-            intent.type = "image/png"
-            mContext.startActivity(Intent.createChooser(intent, title))
-        } catch (e: Exception) {
-            showToastMessage(mContext, e.localizedMessage ?: "")
-        }
-    }
 
     fun showAlertDialog(context: Context, title: String, message: String, positiveButton: String) {
         AlertDialog.Builder(context)

@@ -30,6 +30,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
     private lateinit var format: String
     private lateinit var permissionManager: PermissionManager
     private lateinit var dialog: AlertDialog
+    private lateinit var dialogshare: AlertDialog
 
     companion object {
         private const val ARG_TEXT = "fragmentTAG"
@@ -62,7 +63,10 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             viewModel.selectedID(id)
             viewModel.getDataByID.observe(this, { result -> populateData(result) })
             permissionManager = PermissionManager.from(this)
+
             dialog = GeneralHelper.setProgressDialog(requireContext(), "Downloading...")
+            dialogshare = GeneralHelper.setProgressDialog(requireContext(), "Loading...")
+
             initDialog()
         }
     }
@@ -100,6 +104,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             override fun actionListener(action: String) {
                 when (action) {
                     Constant.listActionAdapter[0] -> goDownload()
+                    Constant.listActionAdapter[1] -> goShare()
                 }
             }
         }).apply {}
@@ -119,7 +124,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                             showSnackBar("Success Saving")
                         } else {
                             dialog.cancel()
-                            showSnackBar("Failed Saving")
+                            showSnackBar(getString(R.string.error_gesi02))
                         }
                     }
                 } else {
@@ -131,5 +136,25 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                     )
                 }
             }
+    }
+
+    private fun goShare() {
+        dialogshare.show()
+        val shareIntent = ShareIntent(requireContext())
+        shareIntent.go(
+            getString(R.string.intent_message),
+            getString(R.string.intent_title),
+            urlImage
+        )
+        shareIntent.getResult {
+            isSuccess: Boolean ->
+            if (isSuccess) {
+                dialogshare.cancel()
+            }
+            else {
+                dialogshare.cancel()
+                showSnackBar(getString(R.string.error_gesi01))
+            }
+        }
     }
 }
