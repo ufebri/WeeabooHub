@@ -1,13 +1,34 @@
 package com.raytalktech.weeaboohub.data.source.remote
 
+import android.app.DownloadManager
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.os.Handler
+import android.os.Looper
+import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.raytalktech.weeaboohub.R
 import com.raytalktech.weeaboohub.data.source.remote.response.DataResponse
 import com.raytalktech.weeaboohub.network.ApiConfig
+import com.raytalktech.weeaboohub.util.GeneralHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.concurrent.Executors
 
 
 class RemoteDataSource {

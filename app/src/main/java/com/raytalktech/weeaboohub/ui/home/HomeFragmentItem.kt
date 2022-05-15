@@ -12,6 +12,7 @@ import com.raytalktech.weeaboohub.config.Constant
 import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
 import com.raytalktech.weeaboohub.databinding.ContentFragmentHomeBinding
 import com.raytalktech.weeaboohub.ui.adapter.PhotoGridAdapter
+import com.raytalktech.weeaboohub.ui.detail.DetailBottomSheet
 import com.raytalktech.weeaboohub.util.GeneralHelper
 import com.raytalktech.weeaboohub.util.ViewModelFactory
 import com.raytalktech.weeaboohub.util.vo.Resource
@@ -64,7 +65,6 @@ class HomeFragmentItem : Fragment() {
                 viewModel.getAllDataList(Constant.listType[0], text)
                     .observe(viewLifecycleOwner, populateListData)
 
-
             binding?.photosGrid?.let {
                 with(it) {
                     adapter = photoGridAdapter
@@ -90,8 +90,14 @@ class HomeFragmentItem : Fragment() {
     }
 
     private val photoGridAdapter: PhotoGridAdapter by lazy {
-        PhotoGridAdapter().apply { submitList(mData) }
+        PhotoGridAdapter(object : PhotoGridAdapter.CallBackAdapter {
+            override fun passingData(id: String) {
+                DetailBottomSheet.newInstance(id)
+                    .show(childFragmentManager, DetailBottomSheet::class.java.canonicalName)
+            }
+        }).apply { submitList(mData) }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

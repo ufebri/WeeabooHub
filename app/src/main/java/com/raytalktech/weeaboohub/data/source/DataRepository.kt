@@ -60,7 +60,8 @@ class DataRepository private constructor(
                             type = type,
                             category = category,
                             dateModified = GeneralHelper.getDateNow(),
-                            imgSrc = data.files[response]
+                            imgSrc = data.files[response],
+                            format = GeneralHelper.setFileFormat(data.files[response])
                         )
                         listData.add(mData)
                     }
@@ -74,9 +75,11 @@ class DataRepository private constructor(
     override fun getDetailDataByID(id: String): LiveData<DataMainEntity> =
         localDataSource.getDetailDataWithID(id)
 
+
     override fun getBookmarkList(): LiveData<List<DataMainEntity>> =
         localDataSource.getBookmarkList()
 
     override fun addToBookmark(dataMainEntity: DataMainEntity, state: Boolean) =
         appExecutors.diskIO().execute { localDataSource.updateDetailData(dataMainEntity, state) }
+
 }

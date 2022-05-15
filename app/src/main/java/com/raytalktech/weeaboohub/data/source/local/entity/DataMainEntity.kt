@@ -16,5 +16,6 @@ data class DataMainEntity(
     var type: String,
     var category: String,
     var dateModified: String,
+    var format: String,
     var isFavorite: Boolean = false
 ) : Parcelable

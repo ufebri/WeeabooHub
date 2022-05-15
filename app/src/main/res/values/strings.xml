@@ -1,5 +1,25 @@
 <resources>
-    <string name="app_name">Weeboo Hub</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">Weeaboo Hub</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- General -->
+    <string name="intent_message">Check this out, i found it at Weeaboo Hub</string>
+    <string name="intent_title">Share To</string>
+
+    <!--  Permission  -->
+    <string name="dialog_permission_title">Permission required</string>
+    <string name="dialog_permission_default_message">Permission required to handle this operations</string>
+    <string name="dialog_permission_button_positive">OK</string>
+    <string name="dialog_permission_save_image">Permission required to save photos from the Web.</string>
+    <string name="dialog_permission_denied_permission">Permission required to handle this operations, activated the permission in the Settings Menu</string>
+
+    <!--  ERROR Message  -->
+    <string name="error_gesi01">There\'s something wrong, try again later [GESI01]</string>
+    <string name="error_gesi02">There\'s something wrong, try again later [GESI02]</string>
+    <string name="error_gesw01">There\'s something wrong, try again later [GESW01]</string>
+
+    <!--  SUCCESS MESSAGE  -->
+    <string name="success_save_image">Success Saving Image</string>
+    <string name="success_added_bookmark">Success Saved to Bookmark</string>
+    <string name="success_set_wallpaper">Success to set Wallpaper</string>
 </resources>
