@@ -6,13 +6,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.raytalktech.weeaboohub.R
 import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
-import com.raytalktech.weeaboohub.databinding.GridViewItemBinding
-import com.raytalktech.weeaboohub.ui.adapter.PhotoGridAdapter
+import com.raytalktech.weeaboohub.databinding.StaggeredViewItemBinding
+import com.raytalktech.weeaboohub.ui.adapter.PhotoStaggeredAdapter
 
-class GridImagesViewHolder(private var binding: GridViewItemBinding) :
+class StaggeredImagesViewHolder(private var binding: StaggeredViewItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(data: DataMainEntity, onClick: PhotoGridAdapter.CallBackAdapter) {
+    fun bind(data: DataMainEntity, onClick: PhotoStaggeredAdapter.CallBackAdapter) {
 
         Glide.with(binding.root)
             .load(data.imgSrc)
@@ -22,8 +22,7 @@ class GridImagesViewHolder(private var binding: GridViewItemBinding) :
                     binding.root.context,
                     R.drawable.loading_animation
                 )
-            )
-            .into(binding.marsImage)
+            ).into(binding.ivItem)
 
         binding.root.setOnClickListener { onClick.passingData(data.id) }
     }

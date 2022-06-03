@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.raytalktech.weeaboohub.data.source.DataRepository
+import com.raytalktech.weeaboohub.ui.bookmark.BookmarkViewModel
 import com.raytalktech.weeaboohub.ui.detail.DetailViewModel
 import com.raytalktech.weeaboohub.ui.home.HomeViewModel
 
@@ -30,6 +31,9 @@ class ViewModelFactory private constructor(private val dataRepository: DataRepos
             }
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 return DetailViewModel(dataRepository) as T
+            }
+            modelClass.isAssignableFrom(BookmarkViewModel::class.java) -> {
+                return BookmarkViewModel(dataRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

@@ -1,6 +1,7 @@
 package com.raytalktech.weeaboohub.config
 
 import com.raytalktech.weeaboohub.R
+import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
 
 object Constant {
 
@@ -61,10 +62,22 @@ object Constant {
      * Constant Value For Icon Action BottomSheet sorter by [listActionAdapter]
      */
     val listActionIconAdapter: List<Int> =
-        listOf(
+        arrayListOf(
             R.drawable.ic_download,
             R.drawable.ic_share,
             R.drawable.ic_bookmark,
             R.drawable.ic_set_wallpaper
         )
+
+    /**
+     * Constant Value BlankView
+     */
+    val listBlankDataView: List<DataMainEntity> = arrayListOf(
+        DataMainEntity("", "", "blank", "", "", "")
+    )
+
+    enum class RESPONSE_CODE {
+        NO_DATA,
+        NO_CONNECTION
+    }
 }

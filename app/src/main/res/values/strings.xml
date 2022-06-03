@@ -5,6 +5,10 @@
     <!-- General -->
     <string name="intent_message">Check this out, i found it at Weeaboo Hub</string>
     <string name="intent_title">Share To</string>
+    <string name="button_to_explore">Explore Now</string>
+    <string name="button_OK">OK</string>
+    <string name="msg_no_data">Seems like you new here, come to take a look</string>
+    <string name="msg_no_connection">Seems like your device not connected</string>
 
     <!--  Permission  -->
     <string name="dialog_permission_title">Permission required</string>
@@ -22,4 +26,8 @@
     <string name="success_save_image">Success Saving Image</string>
     <string name="success_added_bookmark">Success Saved to Bookmark</string>
     <string name="success_set_wallpaper">Success to set Wallpaper</string>
+
+    <!--  Navigation Menu  -->
+    <string name="menu_home">Home</string>
+    <string name="menu_bookmark">Bookmark</string>
 </resources>

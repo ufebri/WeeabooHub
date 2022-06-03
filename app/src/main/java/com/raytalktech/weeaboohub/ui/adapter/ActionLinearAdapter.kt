@@ -1,5 +1,7 @@
 package com.raytalktech.weeaboohub.ui.adapter
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +14,7 @@ class ActionLinearAdapter(private val onClick: CallBackAdapter) :
 
     private var actionList: List<String> = Constant.listActionAdapter
     private var actionIcon: List<Int> = Constant.listActionIconAdapter
+    private var isFavorite: Boolean = false
 
     interface CallBackAdapter {
         fun actionListener(action: String)
@@ -24,8 +27,16 @@ class ActionLinearAdapter(private val onClick: CallBackAdapter) :
     }
 
     override fun onBindViewHolder(holder: ActionViewHolder, position: Int) {
-        holder.bind(actionList[position], actionIcon[position], onClick)
+        holder.bind(actionList[position], actionIcon[position], onClick, isFavorite)
     }
 
     override fun getItemCount(): Int = actionList.size
+
+    fun setFavorite(isFavorite: Boolean) {
+        //TODO: is something wrong here
+        this.isFavorite = isFavorite
+        Handler(Looper.getMainLooper() ?: return).postDelayed({
+            notifyDataSetChanged()
+        }, 1)
+    }
 }

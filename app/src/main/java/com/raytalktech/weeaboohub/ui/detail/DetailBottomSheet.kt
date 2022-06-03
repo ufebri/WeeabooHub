@@ -19,14 +19,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.raytalktech.weeaboohub.R
 import com.raytalktech.weeaboohub.config.Constant
 import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
-import com.raytalktech.weeaboohub.databinding.BottomSheetBinding
+import com.raytalktech.weeaboohub.databinding.DetailBottomsheetBinding
 import com.raytalktech.weeaboohub.ui.adapter.ActionLinearAdapter
 import com.raytalktech.weeaboohub.util.*
 import com.raytalktech.weeaboohub.util.GeneralHelper.showSnackBar
 
 class DetailBottomSheet : BottomSheetDialogFragment() {
 
-    private var _binding: BottomSheetBinding? = null
+    private var _binding: DetailBottomsheetBinding? = null
     private val binding get() = _binding
     private var id = ""
     private lateinit var viewModel: DetailViewModel
@@ -37,6 +37,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
     private lateinit var dialog: AlertDialog
     private lateinit var dialogLoading: AlertDialog
     private lateinit var bitmap: Bitmap
+    private var isFavorite: Boolean = false
 
     companion object {
         private const val ARG_TEXT = "fragmentTAG"
@@ -55,7 +56,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = BottomSheetBinding.inflate(inflater, container, false)
+        _binding = DetailBottomsheetBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
@@ -78,6 +79,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun populateData(mData: DataMainEntity) {
+        isFavorite = mData.isFavorite
         urlImage = mData.imgSrc
         fileName = String.format(
             "%s_%s",
@@ -140,7 +142,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                     Constant.listActionAdapter[3] -> goSetWallpaper()
                 }
             }
-        }).apply {}
+        }).apply { setFavorite(isFavorite) }
     }
 
     private fun goDownload() {
