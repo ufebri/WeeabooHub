@@ -16,4 +16,10 @@
             tools:layout="@layout/content_fragment_bookmark"
             android:label="@string/menu_bookmark"
             android:name="com.raytalktech.weeaboohub.ui.bookmark.BookmarkFragment" />
+
+    <fragment
+            android:id="@+id/profileMenu"
+            tools:layout="@layout/fragment_profile"
+            android:label="@string/menu_profile"
+            android:name="com.raytalktech.weeaboohub.ui.profile.ProfileFragment" />
 </navigation>

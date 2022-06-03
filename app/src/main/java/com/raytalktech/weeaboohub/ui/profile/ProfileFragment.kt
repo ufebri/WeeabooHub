@@ -1,0 +1,39 @@
+package com.raytalktech.weeaboohub.ui.profile
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.raytalktech.weeaboohub.R
+import com.raytalktech.weeaboohub.databinding.FragmentProfileBinding
+
+class ProfileFragment : Fragment() {
+
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (activity != null)
+            binding?.apply {
+                Glide.with(requireContext())
+                    .load("https://avatars.githubusercontent.com/u/36669025?s=400&v=4")
+                    .placeholder(R.drawable.loading_animation)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(ivItem)
+            }
+    }
+}

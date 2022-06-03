@@ -30,4 +30,5 @@
     <!--  Navigation Menu  -->
     <string name="menu_home">Home</string>
     <string name="menu_bookmark">Bookmark</string>
+    <string name="menu_profile">Profile</string>
 </resources>
