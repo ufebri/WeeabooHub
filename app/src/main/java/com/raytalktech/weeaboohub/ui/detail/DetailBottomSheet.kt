@@ -117,6 +117,13 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                 })
                 .into(ivItem)
 
+            tvDetailPhoto.text = String.format(
+                "Categories : %s \n Type : %s \n Date Modified : %s",
+                mData.category,
+                mData.type,
+                mData.dateModified
+            )
+
             rvAction.adapter = actionLinearAdapter
             rvAction.layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)

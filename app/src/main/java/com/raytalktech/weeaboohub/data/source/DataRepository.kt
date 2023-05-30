@@ -46,7 +46,7 @@ class DataRepository private constructor(
                 localDataSource.getAllListData(type, category)
 
             override fun shouldFetch(data: List<DataMainEntity>?): Boolean =
-                data == null || data.isEmpty()
+                data.isNullOrEmpty()
 
             override fun createCall(): LiveData<ApiResponse<DataResponse>> =
                 remoteDataSource.getData(type, category)

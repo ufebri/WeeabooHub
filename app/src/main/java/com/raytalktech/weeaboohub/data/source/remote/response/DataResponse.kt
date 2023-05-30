@@ -9,8 +9,3 @@ data class DataResponse(
     @Json(name = "files")
     val files: List<String>
 ) : Parcelable
-
-data class DataResponseModified(
-    val id: String,
-    val imgSrc: String
-)
