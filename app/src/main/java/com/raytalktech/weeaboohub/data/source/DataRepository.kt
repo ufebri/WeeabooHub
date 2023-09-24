@@ -8,7 +8,7 @@ import com.raytalktech.weeaboohub.data.source.remote.ApiResponse
 import com.raytalktech.weeaboohub.data.source.remote.RemoteDataSource
 import com.raytalktech.weeaboohub.data.source.remote.response.DataResponse
 import com.raytalktech.weeaboohub.util.AppExecutors
-import com.raytalktech.weeaboohub.util.GeneralHelper
+import com.raytalktech.weeaboohub.util.UtilHelper
 import com.raytalktech.weeaboohub.util.vo.Resource
 
 class DataRepository private constructor(
@@ -56,12 +56,12 @@ class DataRepository private constructor(
                 for (response in data.files.indices) {
                     with(response) {
                         val mData = DataMainEntity(
-                            id = GeneralHelper.generateID(data.files[response]),
+                            id = UtilHelper.generateID(data.files[response]),
                             type = type,
                             category = category,
-                            dateModified = GeneralHelper.getDateNow(),
+                            dateModified = UtilHelper.getDateNow(),
                             imgSrc = data.files[response],
-                            format = GeneralHelper.setFileFormat(data.files[response])
+                            format = UtilHelper.setFileFormat(data.files[response])
                         )
                         listData.add(mData)
                     }

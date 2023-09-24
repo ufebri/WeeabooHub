@@ -8,15 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.raytalktech.weeaboohub.R
 import com.raytalktech.weeaboohub.config.Constant
 import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
 import com.raytalktech.weeaboohub.databinding.ContentFragmentHomeBinding
-import com.raytalktech.weeaboohub.ui.adapter.PhotoGridAdapter
 import com.raytalktech.weeaboohub.ui.detail.DetailBottomSheet
-import com.raytalktech.weeaboohub.util.GeneralHelper
+import com.raytalktech.weeaboohub.util.RemappingData.remappingResponseData
 import com.raytalktech.weeaboohub.util.ViewModelFactory
 import com.raytalktech.weeaboohub.util.vo.Resource
 import com.raytalktech.weeaboohub.util.vo.Status
+import com.ufebri.androidbaseprime.domain.model.ItemData
+import com.ufebri.androidbaseprime.ui.adapter.PhotoGridAdapter
+import com.ufebri.androidbaseprime.util.GeneralHelper.showToastMessage
+import com.ufebri.androidbaseprime.util.OnClickListener
 
 class HomeFragmentItem : Fragment() {
 
@@ -80,9 +84,10 @@ class HomeFragmentItem : Fragment() {
             Status.LOADING -> {}
             Status.SUCCESS -> if (result.data != null) {
                 mData = result.data
-                photoGridAdapter.submitList(mData)
+                photoGridAdapter.submitList(remappingResponseData(mData))
             }
-            Status.ERROR -> GeneralHelper.showToastMessage(
+
+            Status.ERROR -> showToastMessage(
                 requireContext(),
                 result?.message.toString()
             )
@@ -90,12 +95,12 @@ class HomeFragmentItem : Fragment() {
     }
 
     private val photoGridAdapter: PhotoGridAdapter by lazy {
-        PhotoGridAdapter(object : PhotoGridAdapter.CallBackAdapter {
-            override fun passingData(id: String) {
-                DetailBottomSheet.newInstance(id)
+        PhotoGridAdapter(object : OnClickListener {
+            override fun onClickItem(item: ItemData) {
+                DetailBottomSheet.newInstance(item.field1s ?: "")
                     .show(childFragmentManager, DetailBottomSheet::class.java.canonicalName)
             }
-        }).apply { submitList(mData) }
+        }, getString(R.string.admob_native_id))
     }
 
 

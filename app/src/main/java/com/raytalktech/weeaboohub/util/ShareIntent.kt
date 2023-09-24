@@ -26,7 +26,7 @@ class ShareIntent(private val mContext: Context) {
                 val imgURL = URL(url)
                 img = BitmapFactory.decodeStream(imgURL.openConnection().getInputStream())
 
-                val file = File(mContext.externalCacheDir, GeneralHelper.generateFileName(url))
+                val file = File(mContext.externalCacheDir, UtilHelper.generateFileName(url))
                 val fOut = FileOutputStream(file)
 
                 img.compress(Bitmap.CompressFormat.PNG, 100, fOut)

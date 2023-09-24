@@ -1,53 +1,24 @@
 package com.raytalktech.weeaboohub.util
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.net.Uri
-import android.os.Build
-import android.util.Log
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import com.raytalktech.weeaboohub.config.Constant
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.*
-import java.net.URL
-import java.text.SimpleDateFormat
-import java.util.*
-import android.widget.LinearLayout
-
-import android.view.WindowManager
-
-import android.widget.TextView
-
 import android.view.Gravity
-
 import android.view.ViewGroup
-import android.view.Window
-
+import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.ProgressBar
-import androidx.core.content.FileProvider
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.raytalktech.weeaboohub.BuildConfig
-import com.raytalktech.weeaboohub.R
+import com.raytalktech.weeaboohub.config.Constant
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
-object GeneralHelper {
+object UtilHelper {
 
     fun generateID(url: String): String {
         val id: String = url
@@ -79,9 +50,6 @@ object GeneralHelper {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
         return sdf.format(Date())
     }
-
-    fun showToastMessage(mContext: Context, message: String) =
-        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
 
     fun showAlertDialog(context: Context, title: String, message: String, positiveButton: String) {
         AlertDialog.Builder(context)

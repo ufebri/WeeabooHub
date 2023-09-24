@@ -22,7 +22,7 @@ import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
 import com.raytalktech.weeaboohub.databinding.BottomSheetBinding
 import com.raytalktech.weeaboohub.ui.adapter.ActionLinearAdapter
 import com.raytalktech.weeaboohub.util.*
-import com.raytalktech.weeaboohub.util.GeneralHelper.showSnackBar
+import com.raytalktech.weeaboohub.util.UtilHelper.showSnackBar
 
 class DetailBottomSheet : BottomSheetDialogFragment() {
 
@@ -70,8 +70,8 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
             viewModel.getDataByID.observe(this, { result -> populateData(result) })
             permissionManager = PermissionManager.from(this)
 
-            dialog = GeneralHelper.setProgressDialog(requireContext(), "Downloading...")
-            dialogLoading = GeneralHelper.setProgressDialog(requireContext(), "Loading...")
+            dialog = UtilHelper.setProgressDialog(requireContext(), "Downloading...")
+            dialogLoading = UtilHelper.setProgressDialog(requireContext(), "Loading...")
 
             initDialog()
         }
@@ -82,7 +82,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
         fileName = String.format(
             "%s_%s",
             getString(R.string.app_name),
-            GeneralHelper.generateFileName(urlImage)
+            UtilHelper.generateFileName(urlImage)
         )
         format = mData.format
 
@@ -168,7 +168,7 @@ class DetailBottomSheet : BottomSheetDialogFragment() {
                         }
                     }
                 } else {
-                    GeneralHelper.showAlertDialog(
+                    UtilHelper.showAlertDialog(
                         requireContext(),
                         getString(R.string.dialog_permission_title),
                         getString(R.string.dialog_permission_denied_permission),
