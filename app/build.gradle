@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 def apikeyPropertiesFile = rootProject.file("config.properties")
@@ -14,6 +16,7 @@ android {
     defaultConfig {
         applicationId "com.raytalktech.weeaboohub"
         minSdkVersion 21
+        //noinspection OldTargetApi
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -21,16 +24,28 @@ android {
         multiDexEnabled true
     }
 
+    signingConfigs {
+        release {
+            keyAlias configProperties['releaseKeyAlias']
+            keyPassword configProperties['releaseKeyPassword']
+            storeFile file(configProperties['releaseKeyStore'])
+            storePassword configProperties['releaseStorePassword']
+        }
+    }
+
     buildTypes {
         release {
+            debuggable false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue("string", "ads_application_id", configProperties["APPLICATION_ID_ADS"])
             resValue("string", "admob_banner_id", configProperties["ADMOB_BANNER_ID"])
             resValue("string", "admob_native_id", configProperties["ADMOB_NATIVE_ID"])
+            signingConfig signingConfigs.release
         }
 
         debug {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue("string", "ads_application_id", configProperties["APPLICATION_ID_ADS"])
@@ -88,4 +103,8 @@ dependencies {
 
     //Splashscreen
     implementation "androidx.core:core-splashscreen:1.0.1"
+
+    implementation platform('com.google.firebase:firebase-bom:32.3.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 }
