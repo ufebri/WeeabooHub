@@ -11,7 +11,7 @@ sealed class Permission(vararg val permissions: String) {
 
     // Grouped permissions
     object Location : Permission(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
-    object Storage : Permission(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE)
+    object Storage : Permission(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE, READ_MEDIA_IMAGES)
 
 
     companion object {

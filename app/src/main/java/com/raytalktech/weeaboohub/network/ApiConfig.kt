@@ -21,7 +21,7 @@ class ApiConfig {
             val loggingInterceptor =
                 HttpLoggingInterceptor()
 
-            if (BuildConfig.BUILD_TYPE == "debug")
+            if (BuildConfig.DEBUG)
                 loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             else
                 loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE)
