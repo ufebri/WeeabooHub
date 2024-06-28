@@ -1,6 +1,7 @@
 WeeabooHub
 ===========
 ![WeabooHub](./assets/icon_app.png)
+[Download Here](https://play.google.com/store/apps/details?id=com.raytalktech.weeaboohub)
 
 <img src="./assets/weaboohub1.png" height="400px" alt="SplashScreen WeabooHub" /><img src="./assets/weaboohub2.png" height="400px" alt="HomeScreen WeabooHub" /><img src="./assets/weaboohub3.png" height="400px" alt="DetailScreen WeabooHub" />
 
@@ -28,7 +29,7 @@ Library
 Getting Started
 -------------------
 
-- Instal Latest Android Studio Version
+- Install Latest Android Studio Version
 - Clone this project
 - Run using Android Studio
 
