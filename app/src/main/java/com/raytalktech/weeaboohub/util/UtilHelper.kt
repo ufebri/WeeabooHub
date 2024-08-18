@@ -158,9 +158,9 @@ object UtilHelper {
 
         // Check the orientation and create the appropriate AdSize
         return when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> AdSize.getInlineAdaptiveBannerAdSize(adWidth, 100)
-            Configuration.ORIENTATION_PORTRAIT -> AdSize.getInlineAdaptiveBannerAdSize(adWidth, 100)
-            else -> AdSize.getInlineAdaptiveBannerAdSize(adWidth, 100)
+            Configuration.ORIENTATION_LANDSCAPE -> AdSize.getInlineAdaptiveBannerAdSize(adWidth, 50)
+            Configuration.ORIENTATION_PORTRAIT -> AdSize.getInlineAdaptiveBannerAdSize(adWidth, 50)
+            else -> AdSize.getInlineAdaptiveBannerAdSize(adWidth, 50)
         }
     }
 }

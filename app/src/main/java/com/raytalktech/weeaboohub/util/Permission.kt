@@ -1,6 +1,11 @@
 package com.raytalktech.weeaboohub.util
 
-import android.Manifest.permission.*
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_MEDIA_IMAGES
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 
 sealed class Permission(vararg val permissions: String) {
     // Individual permissions
