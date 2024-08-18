@@ -3,7 +3,10 @@ package com.raytalktech.weeaboohub.util
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
+import android.os.Build
+import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -11,6 +14,8 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.window.layout.WindowMetricsCalculator
+import com.google.android.gms.ads.AdSize
 import com.google.android.material.snackbar.Snackbar
 import com.raytalktech.weeaboohub.config.Constant
 import java.text.SimpleDateFormat
@@ -128,5 +133,34 @@ object UtilHelper {
             .setAction("OK") {
             }
             .show()
+    }
+
+    fun Fragment.getInlineAdaptiveAdSize(): AdSize? {
+        val context = context ?: return null
+
+        // Get the width in dp based on the API level
+        val adWidth = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics =
+                WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(requireActivity())
+            val widthPixels = windowMetrics.bounds.width()
+            val density = resources.displayMetrics.density
+            (widthPixels / density).toInt()
+        } else {
+            val displayMetrics = DisplayMetrics()
+            @Suppress("DEPRECATION")
+            (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
+                displayMetrics
+            )
+            val widthPixels = displayMetrics.widthPixels
+            val density = displayMetrics.density
+            (widthPixels / density).toInt()
+        }
+
+        // Check the orientation and create the appropriate AdSize
+        return when (resources.configuration.orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> AdSize.getInlineAdaptiveBannerAdSize(adWidth, 100)
+            Configuration.ORIENTATION_PORTRAIT -> AdSize.getInlineAdaptiveBannerAdSize(adWidth, 100)
+            else -> AdSize.getInlineAdaptiveBannerAdSize(adWidth, 100)
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.raytalktech.weeaboohub.util
 
 import com.raytalktech.weeaboohub.data.source.local.entity.DataMainEntity
 import com.ufebri.androidbaseprime.domain.model.PhotoData
-import com.ufebri.androidbaseprime.util.RemappingDataWithAds
 
 object RemappingData {
 
@@ -18,6 +17,6 @@ object RemappingData {
             )
         }
 
-        return RemappingDataWithAds.remappingGalleryList(mList)
+        return mList
     }
 }
